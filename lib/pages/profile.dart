@@ -1,4 +1,5 @@
 import 'package:app/colors.dart';
+import 'package:app/images.dart';
 import 'package:app/pages/base.dart';
 import 'package:app/widgets/index.dart';
 import 'package:flutter/material.dart';
@@ -63,6 +64,7 @@ class _ProfilePageState extends BasePageState<ProfilePage> {
                           fontWeight: FontWeight.normal,
                           fontSize: 18.5)),
                 ),
+                Image(image: Images.icDown()),
                 RowSpace(5),
               ],
             ),
@@ -79,6 +81,7 @@ class _ProfilePageState extends BasePageState<ProfilePage> {
                           fontWeight: FontWeight.normal,
                           fontSize: 18.5)),
                 ),
+                Image(image: Images.icDown()),
                 RowSpace(5),
               ],
             ),
@@ -95,6 +98,7 @@ class _ProfilePageState extends BasePageState<ProfilePage> {
                           fontWeight: FontWeight.normal,
                           fontSize: 18.5)),
                 ),
+                Image(image: Images.icDown()),
                 RowSpace(5),
               ],
             ),
@@ -111,6 +115,7 @@ class _ProfilePageState extends BasePageState<ProfilePage> {
                           fontWeight: FontWeight.normal,
                           fontSize: 18.5)),
                 ),
+                Image(image: Images.icDown()),
                 RowSpace(5),
               ],
             ),
@@ -128,6 +133,64 @@ class _ProfilePageState extends BasePageState<ProfilePage> {
           color: AppColors.white06),
       child: Column(
         children: <Widget>[
+          Row(
+            children: <Widget>[
+              RowSpace(10),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Image(image: Images.icPhone()),
+                      RowSpace(13),
+                      Text("027894563",
+                          style: TextStyle(
+                              fontSize: 17.5,
+                              color: AppColors.white,
+                              fontWeight: FontWeight.w100))
+                    ],
+                  ),
+                  ColumnSpace(13),
+                  Text('Phone Number',
+                      style: TextStyle(
+                          fontSize: 17.5,
+                          color: AppColors.white40,
+                          fontWeight: FontWeight.w100))
+                ],
+              ),
+              Expanded(
+                child: Center(
+                  child: VDivider(50),
+                ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Image(image: Images.icMobile()),
+                      RowSpace(13),
+                      Text("027894563",
+                          style: TextStyle(
+                              fontSize: 17.5,
+                              color: AppColors.white,
+                              fontWeight: FontWeight.w100))
+                    ],
+                  ),
+                  ColumnSpace(13),
+                  Text('Mobile Number',
+                      style: TextStyle(
+                          fontSize: 17.5,
+                          color: AppColors.white40,
+                          fontWeight: FontWeight.w100))
+                ],
+              ),
+              RowSpace(10),
+            ],
+          ),
+          ColumnSpace(20),
+          HDivider(),
+          ColumnSpace(20),
           Row(
             children: <Widget>[
               Column(

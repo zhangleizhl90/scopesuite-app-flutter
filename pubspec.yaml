@@ -59,6 +59,13 @@ flutter:
     - images/ic_notifications.png
     - images/ic_resources.png
     - images/ic_dashboard.png
+    - images/ic_right.png
+    - images/ic_left.png
+    - images/ic_up.png
+    - images/ic_down.png
+    - images/ic_email.png
+    - images/ic_phone.png
+    - images/ic_mobile.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

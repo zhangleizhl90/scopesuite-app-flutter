@@ -1,4 +1,5 @@
 import 'package:app/colors.dart';
+import 'package:app/images.dart';
 import 'package:app/pages/base.dart';
 import 'package:app/widgets/index.dart';
 import 'package:flutter/material.dart';
@@ -12,29 +13,52 @@ class _HomePageState extends BasePageState<HomePage> {
   List<_Item> _items = <_Item>[
     _Item(
         text: 'PROFILE',
-        icon: 'images/ic_profile.png',
+        icon: Images.icProfile(),
         action: (BuildContext context) {
           Navigator.pushNamed(context, '/Profile');
         }),
     _Item(
         text: 'DASHBOARD',
-        icon: 'images/ic_dashboard.png',
+        icon: Images.icDashboard(),
         action: (BuildContext context) {
           Navigator.pushNamed(context, '/Dashboard');
         }),
     _Item(
         text: 'NOTIFICATIONS',
-        icon: 'images/ic_notifications.png',
+        icon: Images.icNotifications(),
         action: (BuildContext context) {
           Navigator.pushNamed(context, '/Notifications');
         }),
     _Item(
         text: 'RESOURCES',
-        icon: 'images/ic_resources.png',
+        icon: Images.icResources(),
         action: (BuildContext context) {
           Navigator.pushNamed(context, '/Resources');
         }),
   ];
+
+  @override
+  AppBar buildAppBar(BuildContext context) {
+    return AppBar(
+        leading: _buildLeading(context),
+        brightness: Brightness.dark,
+        backgroundColor: Colors.transparent,
+        iconTheme: IconThemeData(color: AppColors.white),
+        title: Text(buildTitle(), style: TextStyle(color: AppColors.white)),
+        actions: buildActions(context),
+        centerTitle: true,
+        elevation: 0);
+  }
+
+  Widget _buildLeading(BuildContext context) {
+    return GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, '/Notifications');
+        },
+        child: Image(
+          image: Images.icNotifications(),
+        ));
+  }
 
   @override
   String buildTitle() => 'SCOPESUITE';
@@ -42,16 +66,13 @@ class _HomePageState extends BasePageState<HomePage> {
   @override
   List<Widget> buildActions(BuildContext context) {
     return <Widget>[
-      Padding(
-        padding: EdgeInsets.only(right: 20),
-        child: GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, '/Settings');
-            },
-            child: Image(
-              image: AssetImage('images/ic_settings.png'),
-            )),
-      )
+      GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(context, '/Settings');
+          },
+          child: Image(
+            image: Images.icSettings(),
+          )),
     ];
   }
 
@@ -74,7 +95,7 @@ class _HomePageState extends BasePageState<HomePage> {
             margin: EdgeInsets.fromLTRB(25, 40, 25, 0),
             child: Row(children: <Widget>[
               Image(
-                image: AssetImage(_item.icon),
+                image: _item.icon,
                 fit: BoxFit.contain,
               ),
               RowSpace(18),
@@ -83,6 +104,7 @@ class _HomePageState extends BasePageState<HomePage> {
                 _item.text,
                 style: TextStyle(fontSize: 18.5, color: Colors.white70),
               )),
+              Image(image: Images.icRight())
             ])));
   }
 }
@@ -93,7 +115,7 @@ class _Item {
   @required
   String text;
   @required
-  String icon;
+  AssetImage icon;
   @required
   void Function(BuildContext) action;
 }

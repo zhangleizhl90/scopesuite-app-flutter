@@ -35,11 +35,16 @@ class RowSpace extends Space {
 }
 
 class IndicatorIcon extends StatelessWidget {
+
+  IndicatorIcon({this.width = 6, this.height = 18});
+
+  final double width;
+  final double height;
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 6,
-      height: 18,
+      width: this.width,
+      height: this.height,
       decoration: BoxDecoration(
           gradient: LinearGradient(colors: <Color>[
             AppColors.primaryBlue,
@@ -47,6 +52,32 @@ class IndicatorIcon extends StatelessWidget {
             AppColors.primaryYellow
           ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
           borderRadius: BorderRadius.all(Radius.circular(6))),
+    );
+  }
+}
+
+class HDivider extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 0.5,
+      width: double.infinity,
+      decoration: BoxDecoration(color: AppColors.white40),
+    );
+  }
+}
+
+class VDivider extends StatelessWidget {
+  VDivider(this.height);
+
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 0.5,
+      height: this.height,
+      decoration: BoxDecoration(color: AppColors.white40),
     );
   }
 }
