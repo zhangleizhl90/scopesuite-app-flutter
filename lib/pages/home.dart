@@ -1,6 +1,7 @@
 import 'package:app/colors.dart';
 import 'package:app/images.dart';
 import 'package:app/pages/base.dart';
+import 'package:app/utils.dart';
 import 'package:app/widgets/index.dart';
 import 'package:flutter/material.dart';
 
@@ -36,6 +37,23 @@ class _HomePageState extends BasePageState<HomePage> {
           Navigator.pushNamed(context, '/Resources');
         }),
   ];
+
+  
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  _loadData() async {
+    startLoading();
+    if (!(await isLogined())) {
+      Navigator.pushNamed(context, '/SelectRegionPage');
+    } else {
+      stopLoading();
+    }
+  }
 
   @override
   AppBar buildAppBar(BuildContext context) {

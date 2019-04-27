@@ -6,14 +6,56 @@ abstract class BasePage extends StatefulWidget {
 }
 
 abstract class BasePageState<T extends BasePage> extends State<T> {
+  bool _isLoading = false;
+  startLoading() {
+    setState(() {
+      _isLoading = true; 
+    });
+  }
+
+  stopLoading() {
+    setState(() {
+      _isLoading = false; 
+    });
+  }
+
+  get isLoading => _isLoading;
+  
   @override
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(image: _bgImage()),
-        child: Scaffold(
-            backgroundColor: Colors.transparent,
-            appBar: buildAppBar(context),
-            body: buildBody(context)));
+        child: _wrapLoading(context));
+  }
+
+  Widget _buildScaffold(BuildContext context) {
+    return Scaffold(
+              backgroundColor: Colors.transparent,
+              appBar: buildAppBar(context),
+              body: buildBody(context));
+  }
+
+  Widget _wrapLoading(BuildContext context) {
+    if (_isLoading) {
+      return Stack(
+        children: <Widget>[
+          _buildScaffold(context),
+          _buildLoading(context)
+        ],
+      ); //;
+    } else {
+      return _buildScaffold(context);
+    }
+  }
+
+  Widget _buildLoading(BuildContext context) {
+    return Container(
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: AppColors.black15,
+      ),
+      child: CircularProgressIndicator()
+    );
   }
 
   Widget buildBody(BuildContext context);

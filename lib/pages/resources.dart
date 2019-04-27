@@ -1,4 +1,5 @@
 import 'package:app/colors.dart';
+import 'package:app/http/index.dart';
 import 'package:app/images.dart';
 import 'package:app/pages/base.dart';
 import 'package:app/widgets/index.dart';
@@ -10,13 +11,22 @@ class ResourcesPage extends BasePage {
 }
 
 class _ResourcesPageState extends BasePageState<ResourcesPage> {
-  List<String> _items = <String>[
-    'Apprenticeship UK',
-    'Scopesuite Intern Userguide',
-    'Scopesuite Profile UK',
-    'Scopesuite Apprentice Userguide',
-    'Scopesuite Intern Userguide Scopesuite Profile UK'
-  ];
+  List<Resource> _items = <Resource>[];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  _loadData() async {
+    startLoading();
+    ResourcesResponse response = await getResources();
+    setState(() {
+      this._items = response.resources;
+    });
+    stopLoading();
+  }
 
   @override
   Widget buildBody(BuildContext context) {
@@ -33,11 +43,16 @@ class _ResourcesPageState extends BasePageState<ResourcesPage> {
         },
       );
     } else {
-      return Text("No Resources");
+      return Center(
+          child: Text("No Resources",
+              style: TextStyle(
+                  color: AppColors.white,
+                  fontSize: 21,
+                  fontWeight: FontWeight.w200)));
     }
   }
 
-  Widget _buildItem(String title) {
+  Widget _buildItem(Resource resource) {
     return Container(
         padding: EdgeInsets.all(23),
         decoration: BoxDecoration(
@@ -52,7 +67,7 @@ class _ResourcesPageState extends BasePageState<ResourcesPage> {
             RowSpace(14.5),
             Expanded(
               child: Text(
-                title,
+                resource.label,
                 softWrap: true,
                 style: TextStyle(
                   color: AppColors.white,

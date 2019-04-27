@@ -1,6 +1,8 @@
+import 'package:app/http/index.dart';
 import 'package:app/pages/base.dart';
 import 'package:app/widgets/index.dart';
 import 'package:flutter/material.dart';
+import 'package:app/utils.dart';
 
 class LoginPage extends BasePage {
   LoginPage({Key key}) : super(key: key);
@@ -10,24 +12,27 @@ class LoginPage extends BasePage {
 }
 
 class _LoginPageState extends BasePageState<LoginPage> {
+
+  String _email;
+  String _password;
+
   @override
   Widget buildBody(BuildContext context) {
     return SingleChildScrollView(
         child: Container(
             padding: EdgeInsets.fromLTRB(50, 50, 50, 0),
             child: Form(
+              key: _formKey,
                 child: Column(children: <Widget>[
               Logo(),
               ColumnSpace(35),
               BigTitle('MEMBER', 'LOGIN'),
               ColumnSpace(30),
-              EmailInputField(controller: _emailController),
+              EmailInputField(controller: _emailController, onSaved: _onEmailSaved,),
               ColumnSpace(25),
-              PasswordInputField(controller: _passwordController),
+              PasswordInputField(controller: _passwordController, onSaved: _onPasswordSaved),
               ColumnSpace(25),
-              PrimaryButton('LOGIN', onPressed: () {
-                _login(context);
-              }),
+              PrimaryButton('LOGIN', onPressed: _login),
               ColumnSpace(25),
               SecondaryButton('CLAIM ACCOUNT', onPressed: () {
                 _claimAccount(context);
@@ -42,28 +47,25 @@ class _LoginPageState extends BasePageState<LoginPage> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
-  void _login(BuildContext context) {
-    final form = Form.of(context);
+  GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+
+  void _onEmailSaved(String email) {
+    _email = email;
+  }
+
+  void _onPasswordSaved(String password) {
+    _password = password;
+  }
+
+  void _login() async {
+    final form = _formKey.currentState;
     if (form != null && form.validate()) {
-      showDialog(
-          context: context,
-          builder: (_) => new AlertDialog(
-                  title: new Text("Dialog Title"),
-                  content: new Text(_emailController.toString()),
-                  actions: <Widget>[
-                    new FlatButton(
-                      child: new Text("CANCEL"),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                    new FlatButton(
-                      child: new Text("OK"),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    )
-                  ]));
+      form.save();
+      LoginResponse loginResponse = await login(_email, _password);
+      this.startLoading();
+      await saveLoginToken(loginResponse.token);
+      this.stopLoading();
+      Navigator.popAndPushNamed(context, '/Home');
     }
   }
 
