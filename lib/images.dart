@@ -13,4 +13,6 @@ class Images {
   static AssetImage icPhone() => AssetImage('images/ic_phone.png');
   static AssetImage icMobile() => AssetImage('images/ic_mobile.png');
   static AssetImage icEmail() => AssetImage('images/ic_email.png');
+  static AssetImage icCompetency() => AssetImage('images/ic_competency.png');
+  static AssetImage bgLogout() => AssetImage('images/bg_logout.png');
 }

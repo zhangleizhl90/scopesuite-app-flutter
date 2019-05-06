@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
       '/Settings': (BuildContext _) => SettingsPage(),
       '/Profile': (BuildContext _) => ProfilePage(),
       '/Dashboard': (BuildContext _) => DashboardPage(),
+      '/Competency': (BuildContext _) => CompetencyPage(),
       '/Notifications': (BuildContext _) => NotificationsPage(),
       '/Resources': (BuildContext _) => ResourcesPage()
     };

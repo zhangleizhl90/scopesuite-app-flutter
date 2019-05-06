@@ -33,6 +33,10 @@ dependencies:
   dio: ^2.1.2
   json_annotation: ^2.2.0
 
+  flutter_svg: ^0.12.4
+  flutter_full_pdf_viewer: ^1.0.4
+#  file_picker: ^1.3.4+1
+
 
 dev_dependencies:
   flutter_test:
@@ -54,6 +58,7 @@ flutter:
 
   assets:
     - images/bg.png
+    - images/bg_logout.png
     - images/ic_checkbox_bg.png
     - images/ic_checkbox_choosed.png
     - images/ic_logo.png
@@ -75,6 +80,7 @@ flutter:
     - images/ic_email.png
     - images/ic_phone.png
     - images/ic_mobile.png
+    - images/ic_competency.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

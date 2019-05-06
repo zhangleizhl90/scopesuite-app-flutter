@@ -83,7 +83,7 @@ class _ClaimAccountState extends BasePageState<ClaimAccount> {
   TextEditingController _emailController = TextEditingController();
 
   void _login(BuildContext context) {
-    Navigator.pushNamed(context, '/Login');
+    Navigator.pop(context);
   }
 
   void _claimAccount(BuildContext context) {

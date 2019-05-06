@@ -49,6 +49,6 @@ class _ForgotPasswordPageState extends BasePageState<ForgotPasswordPage> {
   }
 
   void _login(BuildContext context) {
-    Navigator.pushNamed(context, '/Login');
+    Navigator.pop(context);
   }
 }

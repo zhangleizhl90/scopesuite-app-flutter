@@ -63,7 +63,7 @@ class _LoginPageState extends BasePageState<LoginPage> {
       form.save();
       LoginResponse loginResponse = await login(_email, _password);
       this.startLoading();
-      await saveLoginToken(loginResponse.token);
+      await saveLoginToken(loginResponse.token, loginResponse.id);
       this.stopLoading();
       Navigator.popAndPushNamed(context, '/Home');
     }

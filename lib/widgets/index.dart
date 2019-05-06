@@ -2,6 +2,7 @@ export 'package:app/widgets/buttons.dart';
 export 'package:app/widgets/input_fields.dart';
 export 'package:app/widgets/texts.dart';
 export 'package:app/widgets/checkbox.dart';
+export 'package:app/widgets/progress_bar.dart';
 
 import 'package:app/colors.dart';
 import 'package:flutter/widgets.dart';

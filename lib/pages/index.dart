@@ -8,6 +8,7 @@ export 'select_region.dart';
 
 export 'profile.dart';
 export 'dashboard.dart';
+export 'competency/index.dart';
 export 'notifications.dart';
 export 'resources.dart';
 export 'settings.dart';
