@@ -4,7 +4,7 @@ import 'package:app/images.dart';
 import 'package:app/pages/base.dart';
 import 'package:app/widgets/index.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+// import 'package:flutter_svg/flutter_svg.dart';
 
 class ProfilePage extends BasePage {
   @override
@@ -113,23 +113,23 @@ class _ProfilePageState extends BasePageState<ProfilePage> {
   }
 
   _buildAvatar() {
-    if (_profile.avatar.endsWith("svg")) {
-      return SvgPicture.network(
-        _profile.avatar,
-        height: 90,
-        width: 90,
-        placeholderBuilder: (BuildContext context) => Container(
-            padding: const EdgeInsets.all(30.0),
-            child: const CircularProgressIndicator()),
-      );
-    } else {
+    // if (_profile.avatar.endsWith("svg")) {
+    //   return SvgPicture.network(
+    //     _profile.avatar,
+    //     height: 90,
+    //     width: 90,
+    //     placeholderBuilder: (BuildContext context) => Container(
+    //         padding: const EdgeInsets.all(30.0),
+    //         child: const CircularProgressIndicator()),
+    //   );
+    // } else {
       return Image.network(
         _profile.avatar,
         height: 90,
         width: 90,
         fit: BoxFit.contain,
       );
-    }
+    // }
   }
 
   _buildUsername() => Text(

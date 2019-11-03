@@ -43,7 +43,7 @@ class _HomePageState extends BasePageState<HomePage> {
   @override
   void initState() {
     super.initState();
-    _loadData();
+    // _loadData();
   }
 
   _loadData() async {
@@ -62,7 +62,7 @@ class _HomePageState extends BasePageState<HomePage> {
         brightness: Brightness.dark,
         backgroundColor: Colors.transparent,
         iconTheme: IconThemeData(color: AppColors.white),
-        title: Text(
+             title: Text(
           buildTitle(),
           style: TextStyle(color: AppColors.white),
         ),

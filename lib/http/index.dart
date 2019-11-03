@@ -1,10 +1,9 @@
-export 'package:app/http/login_response.dart';
-export 'package:app/http/resource_response.dart';
+export 'package:app/http/login/login_response.dart';
+export 'package:app/http/login/resource_response.dart';
 
-import 'package:app/http/login_response.dart';
-import 'package:app/http/resource_response.dart';
+import 'package:app/http/login/login_response.dart';
+import 'package:app/http/login/resource_response.dart';
 import 'package:app/utils.dart';
-import 'package:dio/dio.dart';
 
 const URL_BASE = "http://192.168.31.68:3000";
 
@@ -14,21 +13,21 @@ const URL_PROFILE = "$URL_BASE/api/v2/contacts/";
 const URL_DASHBOARD = "$URL_BASE/api/v2/dashboards/";
 
 Future<Map> _get<T>(String url) async {
-  Dio dio = new Dio();
-  String authToken = await getLoginToken();
-  Response<Map> response =
-      await dio.get(url, queryParameters: {"auth_token": authToken});
-  return response.data;
+  // Dio dio = new Dio();
+  // String authToken = await getLoginToken();
+  // Response<Map> response =
+  //     await dio.get(url, queryParameters: {"auth_token": authToken});
+  // return response.data;
 }
 
 Future<LoginResponse> login(String username, String password) async {
-  Dio dio = new Dio();
-  FormData formData =
-      new FormData.from({"user[email]": username, "user[password]": password});
-  Response response = await dio.post(URL_LOGIN, data: formData);
-  return LoginResponse.fromJson(response.data);
-  // {"error": "Invalid Email or password"}
-  // {"id": 2, "authentication_token": "xxx", "created_at": "", "updated_at": ""}
+  // Dio dio = new Dio();
+  // FormData formData =
+  //     new FormData.from({"user[email]": username, "user[password]": password});
+  // Response response = await dio.post(URL_LOGIN, data: formData);
+  // return LoginResponse.fromJson(response.data);
+  // // {"error": "Invalid Email or password"}
+  // // {"id": 2, "authentication_token": "xxx", "created_at": "", "updated_at": ""}
 }
 
 Future<ResourcesResponse> getResources() async {
