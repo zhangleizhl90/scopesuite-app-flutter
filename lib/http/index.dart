@@ -6,31 +6,58 @@ import 'dart:io';
 
 import 'package:app/http/login/login_request.dart';
 import 'package:app/http/login/login_response.dart';
+import 'package:app/utils.dart';
 import 'package:dio/dio.dart';
 
+import 'card/card_list_response.dart';
+
 //const URL_BASE = "http://192.168.31.68:3000";
-const HOST = "192.168.31.24:8080";
+const HOST = "http://192.168.31.220:8080";
 
 //const URL_LOGIN = "$URL_BASE/auth/login";
 //const URL_RESOURCES = "$URL_BASE/api/v2/resources";
 //const URL_PROFILE = "$URL_BASE/api/v2/contacts";
 //const URL_DASHBOARD = "$URL_BASE/api/v2/dashboards";
 
-Future<String> _get<T>(Uri uri) async {
-  final dio = Dio();
-  final response = await dio.getUri(uri);
+final authInterceptor = InterceptorsWrapper(
+  onRequest: (RequestOptions options) async {
+    if (options.path.startsWith('/auth')) {
+      return options;
+    }
+
+    final authToken = await getLoginToken();
+    options.headers['Authorization'] = "Bearer $authToken";
+    return options;
+  }
+);
+
+Future<Map> _get<T>(String path) async {
+  final dio = Dio(BaseOptions(baseUrl: HOST));
+  dio.interceptors.add(authInterceptor);
+  final response = await dio.get(path, options: Options(
+      headers: {
+        Headers.acceptHeader: Headers.jsonContentType,
+        Headers.contentTypeHeader: Headers.jsonContentType
+      }
+  ));
   if (response.statusCode == HttpStatus.ok) {
-    return response.data.toString();
+    return response.data;
   } else {
     throw new Exception('Failed to request data');
   }
 }
 
-Future<String> _post<T>(Uri uri, Map<String, dynamic> data) async {
-  final dio = Dio();
-  final response = await dio.postUri(uri, data: data);
+Future<Map> _post<T>(String path, Map<String, dynamic> data) async {
+  final dio = Dio(BaseOptions(baseUrl: HOST));
+  dio.interceptors.add(authInterceptor);
+  final response = await dio.post(path, data: data, options: Options(
+    headers: {
+      Headers.acceptHeader: Headers.jsonContentType,
+      Headers.contentTypeHeader: Headers.jsonContentType
+    }
+  ));
   if (response.statusCode == HttpStatus.ok) {
-    return response.data.toString();
+    return response.data;
   } else {
     throw new Error();
   }
@@ -38,10 +65,13 @@ Future<String> _post<T>(Uri uri, Map<String, dynamic> data) async {
 
 Future<LoginResponse> login(String username, String password) async {
   final loginRequest = LoginRequest(username, password);
-//  final loginUri = Uri.https(HOST, '/auth/login');
-  final loginUri = Uri.http(HOST, '/auth/login');
-  final loginResponseJson = await _post(loginUri, loginRequest.toJson());
-  return LoginResponse.fromJson(jsonDecode(loginResponseJson));
+  final loginResponseJson = await _post('/auth/login', loginRequest.toJson());
+  return LoginResponse.fromJson(loginResponseJson);
+}
+
+Future<CardListResponse> getCardList() async {
+  final json = await _get('/card-list');
+  return CardListResponse.fromJson(json);
 }
 
 class DashboardResponse {

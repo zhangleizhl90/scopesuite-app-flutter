@@ -65,7 +65,7 @@ class _LoginPageState extends BasePageState<LoginPage> {
       this.startLoading();
       await saveLoginToken(loginResponse.authToken);
       this.stopLoading();
-      Navigator.popAndPushNamed(context, '/Home');
+      Navigator.popAndPushNamed(context, '/CardList');
     }
   }
 

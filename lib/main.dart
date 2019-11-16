@@ -1,3 +1,4 @@
+import 'package:app/pages/card_list.dart';
 import 'package:app/pages/index.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
         textSelectionColor: Colors.black87,
       ),
       routes: _buildRoutes(),
-      home: HomePage(),
+      home: CardListPage(),
     );
   }
 
@@ -33,7 +34,9 @@ class MyApp extends StatelessWidget {
       '/Dashboard': (BuildContext _) => DashboardPage(),
       '/Competency': (BuildContext _) => CompetencyPage(),
       '/Notifications': (BuildContext _) => NotificationsPage(),
-      '/Resources': (BuildContext _) => ResourcesPage()
+      '/Resources': (BuildContext _) => ResourcesPage(),
+
+      '/CardList': (BuildContext _) => CardListPage(),
     };
   }
 }
