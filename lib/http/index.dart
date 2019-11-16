@@ -1,56 +1,55 @@
 export 'package:app/http/login/login_response.dart';
 export 'package:app/http/login/resource_response.dart';
 
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:app/http/login/login_request.dart';
 import 'package:app/http/login/login_response.dart';
-import 'package:app/http/login/resource_response.dart';
-import 'package:app/utils.dart';
+import 'package:dio/dio.dart';
 
-const URL_BASE = "http://192.168.31.68:3000";
+//const URL_BASE = "http://192.168.31.68:3000";
+const HOST = "192.168.31.24:8080";
 
-const URL_LOGIN = "$URL_BASE/users/sign_in.json/";
-const URL_RESOURCES = "$URL_BASE/api/v2/resources/";
-const URL_PROFILE = "$URL_BASE/api/v2/contacts/";
-const URL_DASHBOARD = "$URL_BASE/api/v2/dashboards/";
+//const URL_LOGIN = "$URL_BASE/auth/login";
+//const URL_RESOURCES = "$URL_BASE/api/v2/resources";
+//const URL_PROFILE = "$URL_BASE/api/v2/contacts";
+//const URL_DASHBOARD = "$URL_BASE/api/v2/dashboards";
 
-Future<Map> _get<T>(String url) async {
-  // Dio dio = new Dio();
-  // String authToken = await getLoginToken();
-  // Response<Map> response =
-  //     await dio.get(url, queryParameters: {"auth_token": authToken});
-  // return response.data;
+Future<String> _get<T>(Uri uri) async {
+  final dio = Dio();
+  final response = await dio.getUri(uri);
+  if (response.statusCode == HttpStatus.ok) {
+    return response.data.toString();
+  } else {
+    throw new Exception('Failed to request data');
+  }
+}
+
+Future<String> _post<T>(Uri uri, Map<String, dynamic> data) async {
+  final dio = Dio();
+  final response = await dio.postUri(uri, data: data);
+  if (response.statusCode == HttpStatus.ok) {
+    return response.data.toString();
+  } else {
+    throw new Error();
+  }
 }
 
 Future<LoginResponse> login(String username, String password) async {
-  // Dio dio = new Dio();
-  // FormData formData =
-  //     new FormData.from({"user[email]": username, "user[password]": password});
-  // Response response = await dio.post(URL_LOGIN, data: formData);
-  // return LoginResponse.fromJson(response.data);
-  // // {"error": "Invalid Email or password"}
-  // // {"id": 2, "authentication_token": "xxx", "created_at": "", "updated_at": ""}
-}
-
-Future<ResourcesResponse> getResources() async {
-  var userId = await getUserId();
-  return ResourcesResponse.fromJson(await _get("$URL_RESOURCES$userId/"));
-}
-
-Future<ProfileResponse> getProfile() async {
-  var userId = await getUserId();
-  return ProfileResponse.fromJson(await _get("$URL_PROFILE$userId/"));
-}
-
-Future<DashboardResponse> getDashboard() async {
-  var userId = await getUserId();
-  return DashboardResponse.fromJson(await _get("$URL_DASHBOARD$userId/"));
+  final loginRequest = LoginRequest(username, password);
+//  final loginUri = Uri.https(HOST, '/auth/login');
+  final loginUri = Uri.http(HOST, '/auth/login');
+  final loginResponseJson = await _post(loginUri, loginRequest.toJson());
+  return LoginResponse.fromJson(jsonDecode(loginResponseJson));
 }
 
 class DashboardResponse {
   DashboardResponse(
       {this.currentScore,
-      this.currentScoreLabel,
-      this.historicalScores,
-      this.historyScoreLabel});
+        this.currentScoreLabel,
+        this.historicalScores,
+        this.historyScoreLabel});
 
   final int currentScore;
   final String currentScoreLabel;
@@ -82,16 +81,16 @@ class HistoricalScore {
 class ProfileResponse {
   ProfileResponse(
       {this.isLearner,
-      this.avatar,
-      this.username,
-      this.qualification,
-      this.city,
-      this.country,
-      this.siteUrl,
-      this.phone,
-      this.mobile,
-      this.email,
-      this.sections});
+        this.avatar,
+        this.username,
+        this.qualification,
+        this.city,
+        this.country,
+        this.siteUrl,
+        this.phone,
+        this.mobile,
+        this.email,
+        this.sections});
 
   bool isLearner;
   String avatar;

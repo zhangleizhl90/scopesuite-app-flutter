@@ -21,10 +21,10 @@ class _ResourcesPageState extends BasePageState<ResourcesPage> {
 
   _loadData() async {
     startLoading();
-    ResourcesResponse response = await getResources();
-    setState(() {
-      this._items = response.resources;
-    });
+//    ResourcesResponse response = await getResources();
+//    setState(() {
+//      this._items = response.resources;
+//    });
     stopLoading();
   }
 

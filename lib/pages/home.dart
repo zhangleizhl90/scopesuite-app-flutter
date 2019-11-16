@@ -43,7 +43,7 @@ class _HomePageState extends BasePageState<HomePage> {
   @override
   void initState() {
     super.initState();
-    // _loadData();
+     _loadData();
   }
 
   _loadData() async {

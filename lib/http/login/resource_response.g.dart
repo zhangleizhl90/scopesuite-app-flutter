@@ -8,6 +8,8 @@ part of 'resource_response.dart';
 
 ResourcesResponse _$ResourcesResponseFromJson(Map<String, dynamic> json) {
   return ResourcesResponse(
+    json['resCode'] as String,
+    json['resMsg'] as String,
     (json['resources'] as List)
         ?.map((e) =>
             e == null ? null : Resource.fromJson(e as Map<String, dynamic>))
@@ -17,6 +19,8 @@ ResourcesResponse _$ResourcesResponseFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$ResourcesResponseToJson(ResourcesResponse instance) =>
     <String, dynamic>{
+      'resCode': instance.resCode,
+      'resMsg': instance.resMsg,
       'resources': instance.resources,
     };
 

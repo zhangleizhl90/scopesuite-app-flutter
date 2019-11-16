@@ -22,10 +22,10 @@ class _ProfilePageState extends BasePageState<ProfilePage> {
 
   _loadData() async {
     startLoading();
-    ProfileResponse response = await getProfile();
-    setState(() {
-      this._profile = response;
-    });
+//    ProfileResponse response = await getProfile();
+//    setState(() {
+//      this._profile = response;
+//    });
     stopLoading();
   }
 

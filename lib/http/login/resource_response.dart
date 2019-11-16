@@ -4,7 +4,13 @@ part 'resource_response.g.dart';
 
 @JsonSerializable()
 class ResourcesResponse {
-  ResourcesResponse(this.resources);
+  ResourcesResponse(this.resCode, this.resMsg, this.resources);
+
+  @JsonKey()
+  final String resCode;
+
+  @JsonKey()
+  final String resMsg;
 
   @JsonKey()
   List<Resource> resources;

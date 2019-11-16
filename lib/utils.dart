@@ -18,19 +18,12 @@ Future<String> getLoginToken() async {
   return prefs.getString("authToken");
 }
 
-Future<int> getUserId() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  return prefs.getInt("userId");
-}
-
-Future<void> saveLoginToken(String token, int userId) async {
+Future<void> saveLoginToken(String token) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setString("authToken", token);
-  prefs.setInt("userId", userId);
 }
 
 Future<void> removeLoginToken() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.remove("authToken");
-  prefs.remove("userId");
 }
