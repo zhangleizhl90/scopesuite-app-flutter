@@ -1,7 +1,12 @@
 import 'package:json_annotation/json_annotation.dart';
 
+part 'card_detail_response.g.dart';
+
 @JsonSerializable()
 class CardDetailResponse {
+
+  CardDetailResponse(this.resCode, this.resMsg, this.card);
+
   @JsonKey()
   final String resCode;
 
@@ -9,11 +14,30 @@ class CardDetailResponse {
   final String resMsg;
 
   @JsonKey()
-  final Card card;
+  final CardDetail card;
+
+  factory CardDetailResponse.fromJson(Map<String, dynamic> json) =>
+      _$CardDetailResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CardDetailResponseToJson(this);
 }
 
 @JsonSerializable()
-class Card {
+class CardDetail {
+
+  CardDetail(this.id,
+             this.certificate,
+             this.cardVerificationStatusId,
+             this.endDate,
+             this.numDays,
+             this.comment,
+             this.learnerId,
+             this.supervisorId,
+             this.fieldSupervisorId,
+             this.submissionDateTime,
+             this.competencies,
+             this.coreCompetencies,
+             this.rangeVariables);
 
   final int id;
 
@@ -27,13 +51,13 @@ class Card {
 
   final String comment;
 
-  learnerId;
+  final int learnerId;
 
-  supervisorId;
+  final int supervisorId;
 
-  fieldSupervisorId;
+  final int fieldSupervisorId;
 
-  submissionDateTime;
+  final String submissionDateTime;
 
   final List<Competency> competencies;
 
@@ -41,43 +65,110 @@ class Card {
 
   final List<CardRangeVariable> rangeVariables;
 
+  factory CardDetail.fromJson(Map<String, dynamic> json) =>
+      _$CardDetailFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CardDetailToJson(this);
+
 }
 
 @JsonSerializable()
 class Certificate {
 
+  Certificate();
+
+  factory Certificate.fromJson(Map<String, dynamic> json) =>
+      _$CertificateFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CertificateToJson(this);
 }
 
+@JsonSerializable()
 class Competency {
 
+  Competency();
+
+  factory Competency.fromJson(Map<String, dynamic> json) =>
+      _$CompetencyFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CompetencyToJson(this);
 }
 
+@JsonSerializable()
 class CoreCompetency {
 
+  CoreCompetency();
+
+  factory CoreCompetency.fromJson(Map<String, dynamic> json) =>
+      _$CoreCompetencyFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CoreCompetencyToJson(this);
 }
 
+@JsonSerializable()
 class Task {
 
+  Task();
+
+  factory Task.fromJson(Map<String, dynamic> json) =>
+      _$TaskFromJson(json);
+
+  Map<String, dynamic> toJson() => _$TaskToJson(this);
 }
 
+@JsonSerializable()
 class Exhibit {
 
+  Exhibit();
+
+  factory Exhibit.fromJson(Map<String, dynamic> json) =>
+      _$ExhibitFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ExhibitToJson(this);
 }
 
+@JsonSerializable()
 class Rating {
+  
+  Rating();
+  
+  factory Rating.fromJson(Map<String, dynamic> json) =>
+      _$RatingFromJson(json);
 
+  Map<String, dynamic> toJson() => _$RatingToJson(this);
 }
 
+@JsonSerializable()
 class CardRangeVariable {
+
+  CardRangeVariable(this.id,
+                    this.cardId,
+                    this.rangeVariable);
+
+  @JsonKey()
   final int id;
 
-  final int cardId
+  @JsonKey()
+  final int cardId;
 
+  @JsonKey()
   final RangeVariable rangeVariable;
+
+  factory CardRangeVariable.fromJson(Map<String, dynamic> json) =>
+      _$CardRangeVariableFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CardRangeVariableToJson(this);
 }
 
+@JsonSerializable()
 class RangeVariable {
 
+  RangeVariable();
+
+  factory RangeVariable.fromJson(Map<String, dynamic> json) =>
+      _$RangeVariableFromJson(json);
+
+  Map<String, dynamic> toJson() => _$RangeVariableToJson(this);
 }
 
 @JsonSerializable()

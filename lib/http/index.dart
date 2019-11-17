@@ -1,7 +1,6 @@
 export 'package:app/http/login/login_response.dart';
 export 'package:app/http/login/resource_response.dart';
 
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:app/http/login/login_request.dart';
@@ -9,7 +8,10 @@ import 'package:app/http/login/login_response.dart';
 import 'package:app/utils.dart';
 import 'package:dio/dio.dart';
 
+import 'card/card_detail_response.dart';
 import 'card/card_list_response.dart';
+import 'card/submit_request.dart';
+import 'card/submit_response.dart';
 
 //const URL_BASE = "http://192.168.31.68:3000";
 const HOST = "http://192.168.31.220:8080";
@@ -31,10 +33,11 @@ final authInterceptor = InterceptorsWrapper(
   }
 );
 
-Future<Map> _get<T>(String path) async {
+Future<Map> _get<T>(String path, Map<String, dynamic> queryParams) async {
   final dio = Dio(BaseOptions(baseUrl: HOST));
   dio.interceptors.add(authInterceptor);
-  final response = await dio.get(path, options: Options(
+  final response = await dio.get(path, queryParameters: queryParams, 
+  options: Options(
       headers: {
         Headers.acceptHeader: Headers.jsonContentType,
         Headers.contentTypeHeader: Headers.jsonContentType
@@ -70,8 +73,21 @@ Future<LoginResponse> login(String username, String password) async {
 }
 
 Future<CardListResponse> getCardList() async {
-  final json = await _get('/card-list');
+  final json = await _get('/card-list', {});
   return CardListResponse.fromJson(json);
+}
+
+Future<CardDetailResponse> getCardDetail(int cardId) async {
+  final json = await _get('/card-detail', {
+    "cardId": cardId
+  });
+  return CardDetailResponse.fromJson(json);
+}
+
+Future<SubmitResponse> submitCard(int cardId, bool isVerified, String comment) async {
+  final request = SubmitRequest(cardId, isVerified, comment);
+  final json = await _post('/card/submit', request.toJson());
+  return SubmitResponse.fromJson(json);
 }
 
 class DashboardResponse {
