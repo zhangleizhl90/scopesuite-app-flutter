@@ -8,6 +8,7 @@ import 'package:app/http/login/login_response.dart';
 import 'package:app/utils.dart';
 import 'package:dio/dio.dart';
 
+import '../exception.dart';
 import 'card/card_detail_response.dart';
 import 'card/card_list_response.dart';
 import 'card/submit_request.dart';
@@ -33,18 +34,26 @@ final authInterceptor = InterceptorsWrapper(
   }
 );
 
-Future<Map> _get<T>(String path, Map<String, dynamic> queryParams) async {
+Future<Map> _get<T>(String path, {Map<String, dynamic> queryParams}) async {
   final dio = Dio(BaseOptions(baseUrl: HOST));
   dio.interceptors.add(authInterceptor);
-  final response = await dio.get(path, queryParameters: queryParams, 
-  options: Options(
-      headers: {
-        Headers.acceptHeader: Headers.jsonContentType,
-        Headers.contentTypeHeader: Headers.jsonContentType
-      }
-  ));
+  Response response;
+  try {
+    response = await dio.get(path, queryParameters: queryParams, 
+    options: Options(
+        headers: {
+          Headers.acceptHeader: Headers.jsonContentType,
+          Headers.contentTypeHeader: Headers.jsonContentType
+        }
+    ));
+  } catch(err) {
+    throw new Exception('Failed to request data');
+  }
+
   if (response.statusCode == HttpStatus.ok) {
     return response.data;
+  } else if (response.statusCode == HttpStatus.unauthorized) {
+    throw new UnauthorizedException();
   } else {
     throw new Exception('Failed to request data');
   }
@@ -61,8 +70,10 @@ Future<Map> _post<T>(String path, Map<String, dynamic> data) async {
   ));
   if (response.statusCode == HttpStatus.ok) {
     return response.data;
+  } else if (response.statusCode == HttpStatus.unauthorized) {
+    throw new UnauthorizedException();
   } else {
-    throw new Error();
+    throw new Exception("Failed to request data");
   }
 }
 
@@ -73,14 +84,12 @@ Future<LoginResponse> login(String username, String password) async {
 }
 
 Future<CardListResponse> getCardList() async {
-  final json = await _get('/card-list', {});
+  final json = await _get('/card-list');
   return CardListResponse.fromJson(json);
 }
 
 Future<CardDetailResponse> getCardDetail(int cardId) async {
-  final json = await _get('/card-detail', {
-    "cardId": cardId
-  });
+  final json = await _get("/card/$cardId");
   return CardDetailResponse.fromJson(json);
 }
 

@@ -10,7 +10,7 @@ import 'package:flutter/widgets.dart';
 class Logo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Text('Scopesuite',
+    return Text('Skill-Tracker',
         style: TextStyle(fontSize: 32, color: AppColors.white));
   }
 }

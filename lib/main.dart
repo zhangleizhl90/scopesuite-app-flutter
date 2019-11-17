@@ -1,3 +1,4 @@
+import 'package:app/pages/card_detail.dart';
 import 'package:app/pages/card_list.dart';
 import 'package:app/pages/index.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
       '/Resources': (BuildContext _) => ResourcesPage(),
 
       '/CardList': (BuildContext _) => CardListPage(),
+      '/CardDetail': (BuildContext _) => CardDetailPage(),
     };
   }
 }

@@ -1,3 +1,4 @@
+import 'package:app/http/user/person.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'card_list_response.g.dart';
@@ -26,14 +27,16 @@ class CardListResponse {
 @JsonSerializable()
 class CardItem {
 
-  CardItem(this.id, this.cardVerificationStatusId,
+  CardItem(this.id,
+      this.cardVerificationStatusId,
       this.certificateId,
+      this.submissionDateTime,
       this.endDate,
       this.numDays,
       this.comment,
-      this.learnerId,
-      this.supervisorId,
-      this.fieldSupervisorId,
+      this.learner,
+      this.supervisor,
+      this.fieldSupervisor,
       this.verifiedByLearner,
       this.verifiedBySupervisor,
       this.verifiedByFieldSupervisor);
@@ -41,12 +44,13 @@ class CardItem {
   final int id;
   final int certificateId;
   final int cardVerificationStatusId;
+  final String submissionDateTime;
   final String endDate;
   final int numDays;
   final String comment;
-  final int learnerId;
-  final int supervisorId;
-  final int fieldSupervisorId;
+  final Person learner;
+  final Person supervisor;
+  final Person fieldSupervisor;
   final bool verifiedBySupervisor;
   final bool verifiedByLearner;
   final bool verifiedByFieldSupervisor;

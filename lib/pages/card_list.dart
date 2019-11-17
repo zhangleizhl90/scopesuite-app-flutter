@@ -1,5 +1,8 @@
+import 'package:app/colors.dart';
+import 'package:app/exception.dart';
 import 'package:app/http/card/card_list_response.dart';
 import 'package:app/http/index.dart';
+import 'package:app/pages/card_detail.dart';
 import 'package:app/widgets/index.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +15,6 @@ class CardListPage extends BasePage {
 }
 
 class _CardListState extends BasePageState<CardListPage> {
-
   List<CardItem> _items = List();
 
   @override
@@ -41,12 +43,35 @@ class _CardListState extends BasePageState<CardListPage> {
         _gotoCardDetail(item);
       },
       child: Container(
+        decoration: BoxDecoration(
+          color: AppColors.white06,
+          borderRadius: BorderRadius.all(Radius.circular(6))
+        ),
         margin: EdgeInsets.fromLTRB(25, 40, 25, 0),
+        padding: EdgeInsets.all(21.5),
         child: Row(
           children: <Widget>[
-            Text(
-              "${item.id}",
-                style: TextStyle(fontSize: 18.5, color: Colors.white70)
+            Column(
+              children: <Widget>[
+                Row(children: <Widget>[
+                  IndicatorIcon(),
+                  RowSpace(13.3),
+                  Text("${item.submissionDateTime} - ${item.endDate}",
+                    style: TextStyle(fontSize: 21.5, color: Colors.white)),
+                ]),
+                ColumnSpace(26.7),
+                Text("Receipt No: ${item.id}",
+                    style: TextStyle(fontSize: 18.5, color: Colors.white70)),
+                ColumnSpace(6.7),
+                Text("Learner: ${item.learner?.fullName}",
+                    style: TextStyle(fontSize: 18.5, color: Colors.white70)),
+                ColumnSpace(6.7),
+                (item.comment != null && item.comment.isNotEmpty) ?
+                  Text("Comment: ${item.comment}",
+                      style: TextStyle(fontSize: 18.5, color: Colors.white70))
+                : RowSpace(0)
+              ],
+              crossAxisAlignment: CrossAxisAlignment.start,
             ),
             RowSpace(18),
             Expanded(
@@ -61,18 +86,22 @@ class _CardListState extends BasePageState<CardListPage> {
 
   _fetchData() async {
     startLoading();
-    final cardListResponse = await getCardList();
-    setState(() {
-      _items = cardListResponse.cards;
-    });
-
+    try {
+      final cardListResponse = await getCardList();
+      setState(() {
+        _items = cardListResponse.cards;
+      });
+    } catch (err) {
+      if (err is UnauthorizedException) {
+        goToLogin();
+      }
+    }
     stopLoading();
   }
 
-  _gotoCardDetail(CardItem item) {
-    Navigator.pushNamed(context, '/CardList', arguments: {
-      'cardId': item.id
-    });
+  _gotoCardDetail(CardItem item) async {
+    await Navigator.push(context,
+        MaterialPageRoute(builder: (_) => CardDetailPage(cardId: item.id)));
+    _fetchData();
   }
-
 }

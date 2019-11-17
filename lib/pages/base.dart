@@ -83,4 +83,8 @@ abstract class BasePageState<T extends BasePage> extends State<T> {
     return DecorationImage(
         image: AssetImage("images/bg.png"), fit: BoxFit.cover);
   }
+
+  goToLogin() {
+    Navigator.pushNamed(context, '/Login');
+  }
 }

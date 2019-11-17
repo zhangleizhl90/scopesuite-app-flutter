@@ -29,12 +29,19 @@ CardItem _$CardItemFromJson(Map<String, dynamic> json) {
     json['id'] as int,
     json['cardVerificationStatusId'] as int,
     json['certificateId'] as int,
+    json['submissionDateTime'] as String,
     json['endDate'] as String,
     json['numDays'] as int,
     json['comment'] as String,
-    json['learnerId'] as int,
-    json['supervisorId'] as int,
-    json['fieldSupervisorId'] as int,
+    json['learner'] == null
+        ? null
+        : Person.fromJson(json['learner'] as Map<String, dynamic>),
+    json['supervisor'] == null
+        ? null
+        : Person.fromJson(json['supervisor'] as Map<String, dynamic>),
+    json['fieldSupervisor'] == null
+        ? null
+        : Person.fromJson(json['fieldSupervisor'] as Map<String, dynamic>),
     json['verifiedByLearner'] as bool,
     json['verifiedBySupervisor'] as bool,
     json['verifiedByFieldSupervisor'] as bool,
@@ -45,12 +52,13 @@ Map<String, dynamic> _$CardItemToJson(CardItem instance) => <String, dynamic>{
       'id': instance.id,
       'certificateId': instance.certificateId,
       'cardVerificationStatusId': instance.cardVerificationStatusId,
+      'submissionDateTime': instance.submissionDateTime,
       'endDate': instance.endDate,
       'numDays': instance.numDays,
       'comment': instance.comment,
-      'learnerId': instance.learnerId,
-      'supervisorId': instance.supervisorId,
-      'fieldSupervisorId': instance.fieldSupervisorId,
+      'learner': instance.learner,
+      'supervisor': instance.supervisor,
+      'fieldSupervisor': instance.fieldSupervisor,
       'verifiedBySupervisor': instance.verifiedBySupervisor,
       'verifiedByLearner': instance.verifiedByLearner,
       'verifiedByFieldSupervisor': instance.verifiedByFieldSupervisor,
