@@ -15,7 +15,7 @@ import 'card/submit_request.dart';
 import 'card/submit_response.dart';
 
 //const URL_BASE = "http://192.168.31.68:3000";
-const HOST = "http://192.168.31.220:8080";
+const HOST = "http://192.168.31.24:8080";
 
 //const URL_LOGIN = "$URL_BASE/auth/login";
 //const URL_RESOURCES = "$URL_BASE/api/v2/resources";

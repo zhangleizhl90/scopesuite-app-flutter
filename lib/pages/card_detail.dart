@@ -112,7 +112,7 @@ class _CardDetailStage extends BasePageState<CardDetailPage> {
   _submitCard(bool isVerified) async {
     // Validate Date
     if (this._comment == null || this._comment.isEmpty) {
-      showAlert(context, "Please fill in comment.")
+      showAlert(context, "Please fill in comment.");
       return;
     }
     startLoading();

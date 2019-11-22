@@ -7,6 +7,7 @@ import 'package:app/widgets/index.dart';
 import 'package:flutter/material.dart';
 
 import '../images.dart';
+import '../utils.dart';
 import 'base.dart';
 
 class CardListPage extends BasePage {
@@ -73,10 +74,6 @@ class _CardListState extends BasePageState<CardListPage> {
               ],
               crossAxisAlignment: CrossAxisAlignment.start,
             ),
-            RowSpace(18),
-            Expanded(
-                child: Text(item.comment,
-                    style: TextStyle(fontSize: 18.5, color: Colors.white70))),
             Image(image: Images.icRight())
           ],
         ),
@@ -85,18 +82,27 @@ class _CardListState extends BasePageState<CardListPage> {
   }
 
   _fetchData() async {
-    startLoading();
-    try {
-      final cardListResponse = await getCardList();
-      setState(() {
-        _items = cardListResponse.cards;
-      });
-    } catch (err) {
-      if (err is UnauthorizedException) {
-        goToLogin();
+    if (await isLogined()) {
+      startLoading();
+      try {
+        final cardListResponse = await getCardList();
+        setState(() {
+          _items = cardListResponse.cards;
+        });
+      } catch (err) {
+        if (err is UnauthorizedException) {
+          _goToLogin();
+        }
+      } finally {
+        stopLoading();
       }
+    } else {
+      _goToLogin();
     }
-    stopLoading();
+  }
+
+  _goToLogin() {
+    Navigator.popAndPushNamed(context, '/Login');
   }
 
   _gotoCardDetail(CardItem item) async {
